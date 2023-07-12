@@ -1,12 +1,16 @@
-import { IProduct } from '@services/types/IProduct'
+import { IProductCartFront } from '@services/types/IProductCartFront'
 
 export interface ICartContextData {
-  addProduct: (produto: IProduct, quantity: number) => Promise<void>
-  updateQuantity: (produto: IProduct, quantity: number) => Promise<void>
+  fetchProductsInCart: () => void
+  addProduct: (produto: IProductCartFront, quantity: number) => Promise<void>
+  updateQuantity: (
+    product: IProductCartFront,
+    quantity: number
+  ) => Promise<void>
   deleteProduct: (productId: number) => Promise<void>
   deleteAllProducts: () => Promise<void>
-  returnProduct: (idProduct: number) => IProduct
+  returnProduct: (idProduct: number) => IProductCartFront
   sumTotalPrice: () => number
   sumTotalQuantity: () => number
-  listProducts: IProduct[]
+  listProducts: IProductCartFront[]
 }

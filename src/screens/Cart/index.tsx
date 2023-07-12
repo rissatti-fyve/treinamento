@@ -1,26 +1,16 @@
 import React, { useState } from 'react'
-import { Container, ContainerCartProducts, ListProducts } from './styles'
-import { CartHeader } from '@components/structure/CartHeader'
-import { CardProductInCart } from '@components/structure/Cards/CardProductInCart'
-import { ListRenderItemInfo } from 'react-native'
-import { IProduct } from '@services/types/IProduct'
+import { Container, ContainerCartProducts } from './styles'
+import { CartHeader } from '@screens/Cart/components/CartHeader'
 import { LoadingBar } from '@components/toolkit/LoadingBar'
 import { ContinueBar } from '@components/structure/ContinueBar'
-import { useCartContext } from '@contexts/useCartContext'
-import { Form } from '@components/inputs/Form'
-import { OrderCompleted } from '@components/structure/OrderCompleted'
+import { Form } from '@screens/Cart/components/Form'
+import { SucessStep } from './steps/SucessStep'
+import { CartStep } from './steps/CartStep'
+import { FreightStep } from './steps/FreightStep'
 
 export const Cart: React.FC = navigation => {
   const [loadingVar, setLoadingVar] = useState(1)
-  const cartContext = useCartContext()
 
-  function renderItem({ item }: ListRenderItemInfo<IProduct>) {
-    return <CardProductInCart product={item} />
-  }
-
-  function keyExtractor(item: IProduct) {
-    return item.id
-  }
   function handleContinue() {
     if (loadingVar < 3) {
       setLoadingVar(loadingVar + 1)
@@ -28,32 +18,16 @@ export const Cart: React.FC = navigation => {
   }
   return (
     <Container>
-      {loadingVar === 1 ? (
-        <CartHeader titulo="Carrinho" botao="Limpar"></CartHeader>
-      ) : (
-        ''
-      )}
-      {loadingVar === 2 ? <CartHeader titulo="Endereço"></CartHeader> : ''}
-      {loadingVar === 3 ? <CartHeader titulo="Concluído"></CartHeader> : ''}
-      <LoadingBar numberOfSteps={3} currentStep={loadingVar}></LoadingBar>
+      {loadingVar === 1 ? <CartHeader titulo="Carrinho" botao="Limpar" /> : ''}
+      {loadingVar === 2 ? <CartHeader titulo="Endereço" /> : ''}
+      {loadingVar === 3 ? <CartHeader titulo="Concluído" /> : ''}
+      <LoadingBar numberOfSteps={3} currentStep={loadingVar} />
       <ContainerCartProducts>
-        {loadingVar === 1 ? (
-          <ListProducts
-            data={cartContext.listProducts}
-            numColumns={1}
-            horizontal={false}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            renderItem={renderItem}
-            keyExtractor={keyExtractor}
-          />
-        ) : (
-          ''
-        )}
-        {loadingVar === 2 ? <Form></Form> : ''}
-        {loadingVar === 3 ? <OrderCompleted></OrderCompleted> : ''}
+        {loadingVar === 1 ? <CartStep /> : ''}
+        {loadingVar === 2 ? <FreightStep /> : ''}
+        {loadingVar === 3 ? <SucessStep /> : ''}
       </ContainerCartProducts>
-      <ContinueBar value={loadingVar} onPress={handleContinue}></ContinueBar>
+      <ContinueBar value={loadingVar} onPress={handleContinue} />
     </Container>
   )
 }

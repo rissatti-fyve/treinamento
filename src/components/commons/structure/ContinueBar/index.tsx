@@ -1,27 +1,18 @@
 import React from 'react'
-import { ButtonContinue, Container } from './styles'
+import { Container } from './styles'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { Typography } from '@components/toolkit/Typography'
-import theme from '@global/theme'
+import { Button } from '@components/buttons/Button'
 
 interface Props {
-  value: number
   onPress: () => void
 }
 
-export const ContinueBar: React.FC<Props> = ({ value, onPress }) => {
+export const ContinueBar: React.FC<Props> = ({ onPress }) => {
   const insets = useSafeAreaInsets()
+
   return (
     <Container marginBottom={insets.bottom}>
-      <ButtonContinue
-        onPress={() => {
-          onPress()
-        }}
-      >
-        <Typography variant="s2" color={theme.colors.white}>
-          Continuar
-        </Typography>
-      </ButtonContinue>
+      <Button value="Continuar" onPress={onPress}></Button>
     </Container>
   )
 }

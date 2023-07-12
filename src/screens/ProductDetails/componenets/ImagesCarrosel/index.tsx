@@ -11,13 +11,13 @@ interface Props {
 export const ImagesCarrosel: React.FC<Props> = ({ product }) => {
   const [image, setImage] = useState(product.url)
 
+  function handleImagePress(item: any) {
+    setImage(item)
+  }
+
   function renderItem({ item }: ListRenderItemInfo<string>) {
     return (
-      <TouchableOpacity
-        onPress={() => {
-          setImage(item)
-        }}
-      >
+      <TouchableOpacity onPress={() => handleImagePress(item)}>
         <Image
           source={{ uri: item }}
           style={{ height: 49, width: 71, marginLeft: 10, borderRadius: 4 }}

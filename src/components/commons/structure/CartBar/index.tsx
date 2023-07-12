@@ -15,13 +15,17 @@ import { NavigationProps } from '@routes/types/navigationProps'
 
 export const CartBar: React.FC = () => {
   const cartContext = useCartContext()
-
   const navigation = useNavigation<NavigationProps>()
+
+  function handleNavigationPress() {
+    navigation.navigate('Cart')
+  }
+
   return (
-    <Container onPress={() => navigation.navigate('Cart')}>
+    <Container onPress={handleNavigationPress}>
       <ContainerVizualizeCart>
         <ContainerCart>
-          <Icon icon={<CartSVG></CartSVG>}></Icon>
+          <Icon icon={<CartSVG />}></Icon>
           <ContainerQuantity>
             <Typography variant="b4" color={theme.colors.black}>
               {cartContext.sumTotalQuantity()}

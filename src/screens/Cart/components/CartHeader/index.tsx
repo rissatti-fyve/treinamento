@@ -22,17 +22,20 @@ interface Props {
 export const CartHeader: React.FC<Props> = ({ titulo, botao }) => {
   const navigation = useNavigation<NavigationProps>()
   const cartContext = useCartContext()
+
+  function handleNavigationPress() {
+    navigation.navigate('Home')
+  }
+  function handleDeletePress() {
+    cartContext.deleteAllProducts()
+  }
   return (
     <Container>
-      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-        <Icon icon={<BackSVG></BackSVG>}></Icon>
+      <TouchableOpacity onPress={handleNavigationPress}>
+        <Icon icon={<BackSVG />}></Icon>
       </TouchableOpacity>
       <Typography variant="s2">{titulo}</Typography>
-      <TouchableOpacity
-        onPress={() => {
-          cartContext.deleteAllProducts()
-        }}
-      >
+      <TouchableOpacity onPress={handleDeletePress}>
         <Typography variant="s4" color={theme.colors.grey}>
           {botao}
         </Typography>

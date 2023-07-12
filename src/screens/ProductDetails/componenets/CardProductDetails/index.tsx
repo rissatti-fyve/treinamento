@@ -7,7 +7,7 @@ import React from 'react'
 import { Container } from './styles'
 import { Typography } from '@components/toolkit/Typography'
 import theme from '@global/theme'
-import { SizeCarrosel } from '@components/toolkit/SizeCarrosel'
+import { SizeCarrosel } from '@screens/ProductDetails/componenets/SizeCarrosel'
 import { IProduct } from '@services/types/IProduct'
 
 interface Props {

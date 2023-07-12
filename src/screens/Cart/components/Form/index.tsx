@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Container, ContainerLinha } from './styles'
-import { Input } from '../Input'
+import { Input } from '../../../../components/commons/inputs/Input'
 import { getAddressByCep } from '@services/api/routes/address/getAddressByCep'
 
 export const Form: React.FC = () => {
@@ -13,7 +13,10 @@ export const Form: React.FC = () => {
   const [state, setState] = useState('')
 
   async function handleBuscarEndereco(cep: string) {
+    console.log(cep)
+
     const response = await getAddressByCep(cep)
+
     setNeighborhood(response.address.neighborhood)
     setStreet(response.address.street)
     setCity(response.address.city)
@@ -34,7 +37,7 @@ export const Form: React.FC = () => {
         value={cep}
         flex={1}
         onChange={setCep}
-        onFocus={handleCep}
+        onSubmitEditing={handleCep}
       />
       <ContainerLinha>
         <Input

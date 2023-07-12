@@ -1,8 +1,8 @@
 import React from 'react'
 import { Container } from './styles'
-import { CardProductDetails } from '@components/structure/Cards/CardProductDetails'
-import { ImagesCarrosel } from '@components/toolkit/ImagesCarrosel'
-import { BuyingBar } from '@components/structure/BuyingBar'
+import { CardProductDetails } from '@screens/ProductDetails/componenets/CardProductDetails'
+import { ImagesCarrosel } from '@screens/ProductDetails/componenets/ImagesCarrosel'
+import { BuyingBar } from '@screens/ProductDetails/componenets/BuyingBar'
 import { useRoute } from '@react-navigation/native'
 import { ProductDetailsRouteProp } from '@routes/types/routeProps'
 import { BackButton } from '@components/toolkit/BackButton'
@@ -13,12 +13,12 @@ export const ProductDetails: React.FC = navigation => {
 
   return (
     <Container>
-      <ImagesCarrosel product={params.product}></ImagesCarrosel>
-      <BackButton></BackButton>
+      <ImagesCarrosel product={params.product} />
+      <BackButton />
       <ScrollView>
-        <CardProductDetails product={params.product}></CardProductDetails>
+        <CardProductDetails product={params.product} />
       </ScrollView>
-      <BuyingBar product={params.product}></BuyingBar>
+      <BuyingBar product={params.product} />
     </Container>
   )
 }

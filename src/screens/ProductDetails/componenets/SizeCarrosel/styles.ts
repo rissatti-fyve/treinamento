@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components/native'
+import styled from 'styled-components/native'
 
 export const Container = styled.View`
   margin-top: 8px;
@@ -14,12 +14,6 @@ export const SizeBlock = styled.TouchableOpacity`
   height: 41px;
   margin-top: 8px;
   border-radius: 4px;
-
-  ${(props: { isSelected: any }) =>
-    props.isSelected &&
-    css`
-      border: 1px solid black;
-    `}
 `
 export const ContainerSizes = styled.View`
   display: flex;

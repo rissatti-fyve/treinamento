@@ -1,17 +1,17 @@
 import React from 'react'
 
-import {
-  Container,
-  ContainerName,
-  ContainerPrice,
-  ContainerText
-} from './styles'
 import theme from '@global/theme'
 import { Typography } from '@components/toolkit/Typography'
 import { Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { NavigationProps } from '@routes/types/navigationProps'
 import { IProduct } from '@services/types/IProduct'
+import {
+  Container,
+  ContainerName,
+  ContainerPrice,
+  ContainerText
+} from './styles'
 
 interface Props {
   product: IProduct
@@ -20,14 +20,14 @@ interface Props {
 export const CardProduct: React.FC<Props> = ({ product }) => {
   const navigation = useNavigation<NavigationProps>()
 
+  function handleNavigationPress() {
+    navigation.navigate('ProductDetails', {
+      product
+    })
+  }
+
   return (
-    <Container
-      onPress={() =>
-        navigation.navigate('ProductDetails', {
-          product
-        })
-      }
-    >
+    <Container onPress={handleNavigationPress}>
       <Image
         source={{
           uri: product.url

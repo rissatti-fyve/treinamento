@@ -1,22 +1,28 @@
-// External Libraries
 import React, {
   createContext,
   useContext,
   PropsWithChildren,
-  useState
+  useState,
+  useEffect
 } from 'react'
-
-// Types
 import { ICartContextData } from './types'
-import { IProduct } from '@services/types/IProduct'
+import { IProductCartFront } from '@services/types/IProductCartFront'
+import { getProductInCart } from '@services/api/routes/products/getProdducInCart'
 
 const CartContext = createContext<ICartContextData>({} as ICartContextData)
 
 const CartContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [listProducts, setListProducts] = useState<IProduct[]>([])
+  const [listProducts, setListProducts] = useState<IProductCartFront[]>([])
 
-  async function addProduct(product: IProduct, quantity: number) {
-    const productIndex = listProducts.findIndex(p => p.id === product.id)
+  async function fetchProductsInCart() {
+    const list = await getProductInCart('1')
+    setListProducts(list.products)
+  }
+
+  async function addProduct(product: IProductCartFront, quantity: number) {
+    const productIndex = listProducts.findIndex(
+      p => p.idProduct === product.idProduct
+    )
 
     if (productIndex !== -1) {
       const updatedProducts = [...listProducts]
@@ -28,9 +34,11 @@ const CartContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }
   }
 
-  async function updateQuantity(product: IProduct, quantity: number) {
+  async function updateQuantity(product: IProductCartFront, quantity: number) {
     const updatedProducts = [...listProducts]
-    const productIndex = updatedProducts.findIndex(p => p.id === product.id)
+    const productIndex = updatedProducts.findIndex(
+      p => p.idProduct === product.idProduct
+    )
 
     updatedProducts[productIndex] = {
       ...updatedProducts[productIndex],
@@ -42,7 +50,7 @@ const CartContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   async function deleteProduct(productId: number) {
     const updatedProducts = listProducts.filter(
-      product => product.id !== productId
+      product => product.idProduct !== productId
     )
     setListProducts(updatedProducts)
   }
@@ -52,7 +60,7 @@ const CartContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   }
 
   function returnProduct(idProduct: number) {
-    const productIndex = listProducts.findIndex(p => p.id === idProduct)
+    const productIndex = listProducts.findIndex(p => p.idProduct === idProduct)
 
     return listProducts[productIndex]
   }
@@ -60,7 +68,7 @@ const CartContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   function sumTotalPrice(): number {
     let totalPrice = 0
     listProducts.forEach(product => {
-      totalPrice = totalPrice + product.price * product.quantity
+      totalPrice = totalPrice + product.amount * product.quantity
     })
     return totalPrice
   }
@@ -72,9 +80,14 @@ const CartContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     return totalQuantity
   }
 
+  useEffect(() => {
+    fetchProductsInCart()
+  }, [])
+
   return (
     <CartContext.Provider
       value={{
+        fetchProductsInCart,
         addProduct,
         listProducts,
         sumTotalPrice,

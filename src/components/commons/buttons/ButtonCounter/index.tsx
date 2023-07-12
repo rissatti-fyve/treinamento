@@ -11,25 +11,23 @@ interface Props {
   onChange: (type: 'add' | 'remove') => void
 }
 
-export const ButtonSelectAmount: React.FC<Props> = ({ onChange, value }) => {
+export const ButtonCounter: React.FC<Props> = ({ onChange, value }) => {
+  function handleMinusPress() {
+    onChange('remove')
+  }
+  function handleAddPress() {
+    onChange('add')
+  }
   return (
     <Container>
-      <TouchableOpacity
-        onPress={() => {
-          onChange('remove')
-        }}
-      >
-        <Icon icon={<MinusSVG></MinusSVG>}></Icon>
+      <TouchableOpacity onPress={handleMinusPress}>
+        <Icon icon={<MinusSVG></MinusSVG>} />
       </TouchableOpacity>
 
       <Typography variant="s2">{value}</Typography>
 
-      <TouchableOpacity
-        onPress={() => {
-          onChange('add')
-        }}
-      >
-        <Icon icon={<AddSVG></AddSVG>}></Icon>
+      <TouchableOpacity onPress={handleAddPress}>
+        <Icon icon={<AddSVG></AddSVG>} />
       </TouchableOpacity>
     </Container>
   )

@@ -13,7 +13,7 @@ import {
   ContainerTitle,
   ListProducts
 } from './styles'
-import { CardProduct } from '@components/structure/Cards/CardProduct'
+import { CardProduct } from '@components/structure/cards/CardProduct'
 import { NavigationBar } from '@components/structure/NavigationBar'
 import { Typography } from '@components/toolkit/Typography'
 import { SearchBar } from '@components/inputs/SearchBar'
@@ -34,15 +34,6 @@ export const Home: React.FC = navigation => {
     const response = await getAllProducts()
     setData(response.products)
   }
-
-  function renderItem({ item }: ListRenderItemInfo<IProduct>) {
-    return <CardProduct product={item} />
-  }
-
-  function keyExtractor(item: IProduct) {
-    return item.id
-  }
-
   async function handleSearch(search: string) {
     setData([])
     setIsLoading(true)
@@ -55,6 +46,13 @@ export const Home: React.FC = navigation => {
     const response = await getProductByName(searchTratament)
     setIsLoading(false)
     setData(response.products)
+  }
+  function renderItem({ item }: ListRenderItemInfo<IProduct>) {
+    return <CardProduct product={item} />
+  }
+
+  function keyExtractor(item: IProduct) {
+    return item.id
   }
 
   useEffect(() => {
@@ -91,7 +89,7 @@ export const Home: React.FC = navigation => {
       </ContainerBody>
 
       {cartContext.sumTotalQuantity() > 0 ? <CartBar></CartBar> : ''}
-      <NavigationBar></NavigationBar>
+      <NavigationBar />
     </Container>
   )
 }

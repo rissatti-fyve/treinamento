@@ -17,11 +17,3 @@ export const Container = styled.View<Props>`
   padding-right: 16px;
   padding-top: 16px;
 `
-export const ButtonContinue = styled.TouchableOpacity`
-  border-radius: 6px;
-  width: 361px;
-  justify-content: center;
-  align-items: center;
-  padding: 0px 12px 0px 12px;
-  background-color: black;
-`

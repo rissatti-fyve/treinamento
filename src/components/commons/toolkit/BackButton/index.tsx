@@ -9,12 +9,12 @@ export const BackButton: React.FC = () => {
   const navigation = useNavigation<NavigationProps>()
   const insets = useSafeAreaInsets()
 
+  function handleNavigationPress() {
+    navigation.navigate('Home')
+  }
   return (
-    <Container
-      paddingTop={insets.top}
-      onPress={() => navigation.navigate('Home')}
-    >
-      <BackButtonSVG></BackButtonSVG>
+    <Container paddingTop={insets.top} onPress={handleNavigationPress}>
+      <BackButtonSVG />
     </Container>
   )
 }

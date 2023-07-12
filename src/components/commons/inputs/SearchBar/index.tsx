@@ -16,7 +16,7 @@ export const SearchBar: React.FC<Props> = ({
 }) => {
   return (
     <Container>
-      <MagnifierSVG></MagnifierSVG>
+      <MagnifierSVG />
       <SearchInput
         placeholder="Pesquisar"
         value={value}

@@ -13,7 +13,7 @@ interface Props {
   value: string
   flex: number
   onChange: (text: string) => void
-  onFocus?: (text: string) => void
+  onSubmitEditing?: (text: string) => void
 }
 
 export const Input: React.FC<Props> = ({
@@ -22,7 +22,7 @@ export const Input: React.FC<Props> = ({
   flex,
   value,
   onChange,
-  onFocus
+  onSubmitEditing
 }) => {
   return (
     <Container flexNumber={flex}>
@@ -31,7 +31,7 @@ export const Input: React.FC<Props> = ({
         placeholder={placeholder}
         onChangeText={onChange}
         value={value}
-        onFocus={onFocus}
+        onSubmitEditing={onSubmitEditing}
       />
     </Container>
   )

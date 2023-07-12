@@ -5,7 +5,7 @@ import theme from '@global/theme'
 import { IProduct } from '@services/types/IProduct'
 import { useCartContext } from '@contexts/useCartContext'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { ButtonSelectAmount } from '@components/buttons/ButtonSelectAmount'
+import { ButtonCounter } from '@components/buttons/ButtonCounter'
 import { useNavigation } from '@react-navigation/native'
 import { NavigationProps } from '@routes/types/navigationProps'
 import { addProductInCart } from '@services/api/routes/products/addProductInCart'
@@ -19,6 +19,7 @@ export const BuyingBar: React.FC<Props> = ({ product }) => {
   const navigation = useNavigation<NavigationProps>()
   const cartContext = useCartContext()
   const [quantity, setQuantity] = useState(0)
+  const insets = useSafeAreaInsets()
 
   const productCart: IProductCart = {
     idUser: '1',
@@ -29,12 +30,10 @@ export const BuyingBar: React.FC<Props> = ({ product }) => {
   }
 
   const handleAddToCart = async (count: number) => {
-    cartContext.addProduct(product, count)
-    addProductInCart(productCart)
+    const productCartFront = await addProductInCart(productCart)
+    cartContext.addProduct(productCartFront.products[0], count)
     navigation.navigate('Home')
   }
-
-  const insets = useSafeAreaInsets()
 
   function handleQUantity(type: 'add' | 'remove') {
     if (type === 'add') {
@@ -46,10 +45,7 @@ export const BuyingBar: React.FC<Props> = ({ product }) => {
 
   return (
     <Container marginBottom={insets.bottom}>
-      <ButtonSelectAmount
-        value={quantity}
-        onChange={handleQUantity}
-      ></ButtonSelectAmount>
+      <ButtonCounter value={quantity} onChange={handleQUantity} />
       <ContainerAddToCart
         onPress={() => {
           handleAddToCart(quantity)
